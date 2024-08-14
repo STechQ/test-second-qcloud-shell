@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Plateau Studio</title>
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.6.96/css/materialdesignicons.min.css" />
+    <link rel="icon" href="https://studio.onplateau.com/images/iconplateau.png" />
+    <style>
+        * {
+            font-family: "Roboto";
+        }
+        .login-container {
+          display: flex;
+          background: #FFFFFF;
+          align-items: center;
+          justify-content: space-around;
+          width: 100%;
+          height: 100vh;
+          background-color: #F5F5FA;
+          padding: 20px;
+        }
+        .form-wrap{
+          display: grid;
+          padding: 0px 146px 0;
+          right: 0;
+          background: #FFFFFF;
+          overflow: auto;
+          align-items: center;
+          border-radius: 16px;
+        }
+        .form-logo{
+            width: 276px;
+            height: 49px;
+            margin: 0 auto 63px;
+            display: block;
+        }
+        .login-text-container {
+            width: 300px;
+            margin-bottom: 10px;
+            opacity: 1;
+        }
+        .login-text {
+            text-align: left;
+            font-size: 32px;
+            letter-spacing: 0px;
+            color: #151233;
+            opacity: 1;
+            font-weight: 500;
+            height: 54px;
+        }
+        .content {
+            text-align: left;
+            font-size: 22px;
+            letter-spacing: 0px;
+            color: #757575;
+            opacity: 1;
+            margin-bottom: 24px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            background-color: #eeeeee;
+            border-radius: 10px;
+            border: none;
+            font-size: 20px;
+            font-weight: normal;
+            letter-spacing: 0px;
+            color: #212121;
+            opacity: 1;
+        }
+        input::placeholder {
+            color: #616161;
+        }
+        .input-group:hover .form-control,
+        .input-group:hover span,
+        .input-group:hover button
+        {
+            background: #E3E3E3;
+        }
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .input-style {
+            border: none;
+            background-color: #eeeeee;
+            padding: 14px 12px;
+            padding: 14px 14px;
+            border-radius: 10px;
+            color: #4F537B;
+            height: 54px;
+            display: flex;
+            align-items: center;
+        }
+        .form-control {
+            padding: 17px 6px;
+            appearance: auto;
+            -webkit-appearance: auto;
+            -moz-appearance: auto;
+            height: 54px;
+        }
+        .form-control:focus {
+            background-color: #E3E3E3 !important;
+            box-shadow: none !important;
+        }
+
+        .form-control:disabled, .form-control[readonly]{
+            opacity: 1;
+        }
+        .eye,
+        .chevron-down {
+            margin-right: 10px;
+            border-radius: 10px 0 0 10px;
+        }
+        .next-step-button {
+            width: 100%;
+            font-size: 20px;
+            font-weight: normal;
+            color: #ffffff;
+            background-color: #151233;
+            border: none !important;
+            border-radius: 10px;
+            padding: 15px;
+            height: 54px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .next-step-button:not(:disabled):hover {
+            background: #2F3160;
+        }
+        .next-step-button:disabled {
+          opacity: 0.5;
+        }
+        .previous-step-button {
+            width: 100%;
+            font-size: 20px;
+            font-family: "Roboto";
+            font-weight: 500;
+            color: #151233;
+            background-color: #FFFFFF;
+            border: 2px solid #151233;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .previous-step-button:hover{
+            color:#2F3160;
+            border: 2px solid #2F3160;
+        }  
+        .back-to-login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: #151233;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .step-bars {
+            display: flex;
+            padding: 32px;
+            justify-content: center;
+        }
+        .step-bar {
+            background-color: #2F3160; 
+            border-radius: 11px; 
+            width: 72px; 
+            height: 6px;
+        }
+        .sent-code {
+            width: 64px;
+            height: 64px;
+            padding: 5px;
+            font-size: 20px;
+            border-radius: 10px !important;
+            text-align: center;
+            border: none;
+            background: #EEEEEE;
+            margin-right: 15px;
+        }
+        .sent-code:hover{
+            background: #E3E3E3;
+        }
+        .sent-code:focus-visible {
+            outline: none;
+        }
+        .sent-code::-webkit-inner-spin-button,
+        .sent-code::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input::-ms-reveal,
+        input::-ms-clear {
+          display: none;
+        }
+        .login-background {
+          width: 100%;
+          max-width: calc(100% - 772px);
+          margin-top: 60px;
+          height: auto;
+        }
+        button:focus-visible {
+          outline: none;
+        }
+        .error-text-class,
+        #studioauth_errorPass,
+        #studioauth_emailVerification_error,
+        #studioauth_errorEmail,
+        #studioauth_errorVerificationCode,
+        #studioauth_errorPass2,
+        #studioauth_emailVerification_error,
+        #studioauth_claimVerification_error,
+        #studioauth_emailVerificationControl_success_message,
+        #emailVerificationControl_error_message,
+        #claimVerificationServerError,
+        #emailVerificationControl_success_message {
+            color: #FF6B6B;
+            margin-bottom: 10px;
+        }
+        .lang-change-btn {
+          border:none;
+          background-color: transparent;
+          color:#151233;
+          padding: 8px 0px;
+          font-size: 16px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+        }
+        .privacy-policies {
+          margin-top: 32px;
+          color: #212121;
+          font-size: 14px;
+          line-height: 20px;
+        }
+        .policy-checkbox {
+          margin-right: 10px;
+        }
+        .container-switch {
+          display: block;
+          position: relative;
+          padding-left: 28px;
+          cursor: pointer;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        .container-switch input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 18px;
+          width: 18px;
+          background: #CBCBCB;
+          border-radius: 4px;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container-switch:hover input ~ .checkmark {
+          background-color: #BCBCBC;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container-switch input:checked ~ .checkmark {
+          background-color: #151233;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container-switch input:checked ~ .checkmark:after {
+          display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container-switch .checkmark:after {
+          left: 7px;
+          top: 2px;
+          width: 5px;
+          height: 12px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+          
+        @media (max-width: 1100px) {
+          .login-container{
+            padding: 0!important;
+          }
+          .login-images  {
+            display: none!important;
+          }
+          .form-wrap {
+            width: 100%;
+          }
+          .login-frame {
+            width: 100%!important;
+            height: 100vh!important;
+          }
+        }
+        .svg {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          background: #F5F5FA;
+          border-radius: 10px;
+          height: 100%;
+          width: 351px;
+         
+        }
+        .login-images{
+          display: flex;
+          justify-content: start;
+        }
+        .login-frame {
+          width: 1360px;
+          display: flex;
+          justify-content: space-between;
+          background-color: #fff;
+          border-radius: 16px;
+          padding: 20px;
+          height: 100%;
+          box-shadow: 2px 4px 20px 0 rgba(21, 18, 51, 0.08);
+        }
+    </style>
+</head>
+<body>
+     <div class="login-container container-fluid m-0">
+      <div class="login-frame">
+      <div class="login-images col-lg-4">
+        <div id="svg1">
+          <div class="svg">
+            <img src="https://stechq.github.io/cdn/documentation/studio/plateau_logo-title.png" alt="login_background"/>
+            <img src="https://stechq.github.io/cdn/documentation/studio/logo_phone.png" alt="login_background"/>
+            <img src="https://stechq.github.io/cdn/documentation/studio/plateau_logo-title2.png" alt="login_background"/>
+          </div>
+        </div>
+       <div id="svg2">
+        <div class="svg">
+          <img src="https://stechq.github.io/cdn/documentation/studio/plateau_logo-title.png" alt="login_background">
+          <img src="https://stechq.github.io/cdn/documentation/studio/logo_computer.png" alt="login_background">
+          <img src="https://stechq.github.io/cdn/documentation/studio/plateau_logo-title2.png" alt="login_background">
+        </div>
+       </div>
+       </div>
+        <div class="form-wrap col-lg-7 col-12">
+            <div class="form-content studioauth-translate-children">
+                <div id="email-step">
+                    <div class="login-text-container">
+                        <h1 class="login-text template-section-text">${section-text}</h1>
+                    </div>
+                    <p class="content template-section-text">${section-info-text-email}</p>
+                    <form action="javascript:void(0);"> 
+                        <div id="studioauth_errorEmail"></div>
+                        <div class="input-group">
+                            <span class="input-style" id="basic-addon1"><i class="mdi mdi-email-outline mdi-24px"></i></span>
+                            <input class='form-control' type="text" id='studio_email' placeholder="E-Mail" oninput="this.value=this.value.toLowerCase()" required='true'/>
+                        </div>
+                        <div class="step-bars">
+                            <div class="step-bar" style="background-color: #2F3160;"></div>           
+                            <div class="step-bar" style="background-color: #D5D5D5;margin: 0 10px"></div>           
+                            <div class="step-bar" style="background-color: #D5D5D5"></div>           
+                        </div>
+                        <div>
+                            <button onclick="sendVerificationCode()" class="next-step-button">NEXT</button>
+                        </div>
+                    </form>
+                    <div class="bottom-content" style="margin-top: 22px">
+                        <div class="template-section-text" style="color:#A1A1A1; font-size:18px; text-align: center;margin-bottom: 22px;">${section-info-backtologin}</div>
+                        <div class="back-to-login"><span onclick="backToLogin()">Back to Login Page</span></div>
+                    </div>
+                    <div class="mt-4" style="display: block;">
+                      <div id="studioauth_langSelection" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                        <button class="lang-change-btn" onclick="langChange(this.value)" style="display: none" value="en" id="en">
+                          <i class="mdi mdi-web" style="font-weight: 400;font-size: 24px; margin-right: 4px;"></i>EN</button>
+                        <button class="lang-change-btn" onclick="langChange(this.value)" value="tr" id="tr">
+                          <i class="mdi mdi-web" style="font-weight: 400;font-size: 24px; margin-right: 4px;"></i>TR</button>
+                      </div>
+                    </div>
+                </div>
+                <div id="code-step" style="display: none">
+                    <div class="login-text-container">
+                        <h1 class="login-text template-section-text">${section-text}</h1>
+                    </div>
+                    <p class="content template-section-text" id="confirmText">Confirm your email by entering the 6-digit code we sent to ${mail}</p>
+                    <form action="javascript:void(0);"> 
+                        <div id="studioauth_emailVerification_error" style="display: none;"></div>
+                        <div id="studioauth_errorVerificationCode"></div>
+                        <div class="input-group">
+                            <input class="sent-code" required type="number" maxlength="1" min="0" max="9" oninput="changeInputFocus(event)" onkeydown="handleBackspace(event)"/>
+                            <input class="sent-code" required type="number" maxlength="1" min="0" max="9" oninput="changeInputFocus(event)" onkeydown="handleBackspace(event)"/>
+                            <input class="sent-code" required type="number" maxlength="1" min="0" max="9" oninput="changeInputFocus(event)" onkeydown="handleBackspace(event)"/>
+                            <input class="sent-code" required type="number" maxlength="1" min="0" max="9" oninput="changeInputFocus(event)" onkeydown="handleBackspace(event)"/>
+                            <input class="sent-code" required type="number" maxlength="1" min="0" max="9" oninput="changeInputFocus(event)" onkeydown="handleBackspace(event)"/>
+                            <input class="sent-code" required type="number" maxlength="1" min="0" max="9" oninput="changeInputFocus(event)" onkeydown="handleBackspace(event)" style="margin-right: 0"/>
+                        </div>
+                        <div class="step-bars">
+                            <div class="step-bar"></div>           
+                            <div class="step-bar" style="margin: 0 10px"></div>           
+                            <div class="step-bar" style="background-color: #D5D5D5"></div>           
+                        </div>
+                        <div style="display:flex">
+                            <div onclick="goStep(0)" class="previous-step-button" style="width: 48%;margin-right: 19px;">PREVIOUS</div>
+                            <button onclick="verifyCode()" class="next-step-button" style="width: 48%;">NEXT</button>
+                        </div>
+                    </form>
+                    <div class="bottom-content" style="margin-top: 110px"> 
+                        <div class="template-section-text" style="color:#A1A1A1; font-size:18px; text-align: center;margin-bottom: 35px;">${section-info-backtologin}</div>
+                        <div class="back-to-login"><span onclick="backToLogin()">Back to Login Page</span></div>
+                    </div>
+                </div>
+                <div id="password-step" style="display: none">
+                    <div class="login-text-container">
+                        <h1 class="login-text template-section-text">${section-text}</h1>
+                    </div>
+                    <form action="javascript:void(0);">
+                        <div id="studioauth_claimVerification_error" style="display: none;"></div>
+                        <div id="studioauth_emailVerificationControl_success_message" style="display: none;"></div>
+                        <div id="studio_password-fields">
+                          <p class="content template-section-text">Confirm your password</p>
+                          <div id="studioauth_errorPass"></div>
+                          <div class="input-group mb-4">
+                            <span class="input-style" id="basic-addon1"><i class="mdi mdi-lock-outline mdi-24px"></i></span>
+                            <input  type="password" placeholder="Password" class='form-control' id='studioauth_loginPassword' />
+                            <div class="input-style eyeButton" style="color: #757575; cursor: pointer;"><i class="mdi mdi-eye mdi-24px eye" onclick="passwordVisible('studioauth_loginPassword', event)"></i></div>
+                          </div>
+                          <div id="studioauth_errorPass2"></div>
+                          <div class="input-group">
+                            <span class="input-style" id="basic-addon1"><i class="mdi mdi-lock-outline mdi-24px"></i></span>
+                            <input  type="password" placeholder="Password again" class='form-control' id='studioauth_loginPassword2' />
+                            <div class="input-style eyeButton" style="color: #757575; cursor: pointer;"><i class="mdi mdi-eye mdi-24px eye" onclick="passwordVisible('studioauth_loginPassword2',event)"></i></div>
+                          </div>
+                        </div>
+                        <div class="privacy-policies" id="privacy-policies">
+                          <label class="container-switch" style="margin-bottom: 16px;">
+                            <label>I have read and approved the <span onclick="openDocument('user-agremeent.html')" style="font-weight: 500; text-decoration: underline; cursor: pointer; margin-left: 5px">User Agreement.</span></label>
+                            <input onclick="isSignUpDisabled('user-agreement')" type="checkbox" class="policy-checkbox"/>
+                            <span class="checkmark"></span>
+                          </label>
+                          <label class="container-switch">
+                            <label>I have read and understood the <span onclick="openDocument('information-notice.html')" style="font-weight: 500; text-decoration: underline; cursor: pointer; margin-left: 5px"> Information Notice</span></label> 
+                            <input onclick="isSignUpDisabled('information-notice')" type="checkbox" class="policy-checkbox"/>
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div class="privacy-policies" id="gizlilik-politikaları" style="display: none;">
+                          <label class="container-switch" style="margin-bottom: 16px;">
+                            <label><span onclick="openDocument('kullanici-sozlesmesi.html')" style="font-weight: 500; text-decoration: underline; cursor: pointer; margin-right: 5px">Kullanıcı Sözleşmesi'ni </span> okudum, onaylıyorum.</label>
+                            <input onclick="isSignUpDisabled('user-agreement')" type="checkbox" class="policy-checkbox"/>
+                            <span class="checkmark"></span>
+                          </label>
+                          <label class="container-switch">
+                            <label><span onclick="openDocument('aydinlatma-metni.html')" style="font-weight: 500; text-decoration: underline; cursor: pointer; margin-right: 5px">Aydınlatma Metni'ni </span> okudum, anladım.</label> 
+                            <input onclick="isSignUpDisabled('information-notice')" type="checkbox" class="policy-checkbox"/>
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div class="step-bars">
+                            <div class="step-bar"></div>           
+                            <div class="step-bar" style="margin: 0 10px"></div>           
+                            <div class="step-bar"></div>           
+                        </div>
+                        <div style="display:flex">
+                            <div onclick="goStep(0)" class="previous-step-button" style="width: 48%;margin-right: 19px;">PREVIOUS</div>
+                            <button onclick="finish()" class="next-step-button" style="width: 48%;" id="sign-up-btn">SIGN UP</button>
+                        </div>
+                    </form> 
+                    <div class="bottom-content" style="margin-top: 54px">
+                        <div class="template-section-text" style="color:#A1A1A1; font-size:18px; text-align: center;margin-bottom: 35px;">${section-info-backtologin}</div>
+                        <div class="back-to-login"><span onclick="backToLogin()">Back to Login Page</span></div>
+                    </div>
+                </div>
+                <div id="password-step-forgot-failed" style="display: none">
+                  <div class="login-text-container">
+                      <h1 class="login-text template-section-text">${section-text}</h1>
+                  </div>
+                  <div id="studioauth_claimVerification_error_forgot_failed" class="error-text-class"></div>
+                  <div class="bottom-content" style="margin-top: 54px">
+                      <div class="back-to-login"><span onclick="backToLogin()">Back to Login Page</span></div>
+                  </div>
+              </div>
+            </div>
+            <div id="api" role="main" style="display: none;"></div>
+        </div>
+      </div>
+     </div>
+     <script>
+        //our events
+        var baseObject = {
+          "studioauth.b2clogin.com": {envName: "local"},
+          "authstudio.b2clogin.com": {envName: "prod"},
+        } [new URL(window.location.href).hostname];
+        let currentStep = -1;
+        const queryString = gatherQueryString();
+        const isForgotPassword = queryString.claimsexchange == "ForgotPassword";
+        const email = queryString.email;
+        const get = name => document.getElementById(name);
+        const query = query => document.querySelector(query);
+        const queryAll = query => document.querySelectorAll(query);
+        let userAgreement = false;
+        let informationNotice = false;
+        function openDocument (documentName) {
+          if(baseObject.envName == "prod") {
+            window.open("https://studio.onplateau.com/contents/" + documentName, "_blank");
+          }
+          else {
+            window.open("https://salmon-island-009d8da03.3.azurestaticapps.net/contents/" + documentName, "_blank");
+          }
+      }
+        function goStep(step) {
+            if (currentStep == step){return;}
+            templates();
+            switch(step){
+              case 0:
+                email && (divs.form.studio.text_email.value = email);
+                document.getElementById("email-step").style.display = "block";
+                document.getElementById("code-step").style.display = "none";
+                document.getElementById("password-step").style.display = "none";
+                break;
+              case 1:
+                Array.from(divs.form.studio.text_emailVerificationCodes).map(node => node.value = "");
+                Object.keys(divs.error).forEach(key => divs.error[key].textContent = "");
+                document.getElementById("email-step").style.display = "none";
+                document.getElementById("code-step").style.display = "block";
+                document.getElementById("password-step").style.display = "none";
+                document.getElementsByClassName("sent-code")[0].focus();
+                break;
+              case 2: 
+                Object.keys(divs.error).forEach(key => divs.error[key].textContent = "");
+                document.getElementById("email-step").style.display = "none";
+                document.getElementById("code-step").style.display = "none";
+                document.getElementById("password-step").style.display = "block";
+                if (isForgotPassword){
+                  divs.form.studio.passwordFields.style.display = "none";
+                  document.getElementById("password-step").style.display = "none";
+                  finish();
+                }
+                break;
+            }
+            currentStep = step;
+        }
+
+        function gatherQueryString() {
+            const { search } = window.location;
+            if (!search) { return {}; }
+
+            return search.replace(/\?/g, "&").split("&")
+                .map(item => { const dat = item.split("="); return { key: dat[0], value: dat[1] } })
+                .reduce((prev, item) => { prev[item.key] = item.value; return prev; }, {});
+        }
+        document.addEventListener('paste', handlePaste);
+        function changeInputFocus(event) {
+            if(event.target.value.length == 1) {
+              event.target.nextElementSibling?.focus();
+            }
+        }
+        function handleBackspace(event) {
+          if(event.target.value.length == 0) {
+              if(event.key == "Backspace") {
+                event.target.previousElementSibling?.focus();
+              }
+          }
+        }
+        function handlePaste (event) {
+          if(event.target.localName != 'input'){return;}
+          if(event.target.className == "sent-code") {event.preventDefault();};
+          let paste = (event.clipboardData || window.clipboardData).getData("text");
+          let inputs = document.querySelectorAll('.sent-code');
+          if(paste.length != inputs.length){return;}
+          inputs.forEach((input, index) => {
+            input.focus();
+            input.value = paste[index];
+          })
+        }
+        function passwordVisible (elementId, event) {
+          if(document.getElementById(elementId).type == "password") {
+            document.getElementById(elementId).type = "text";
+          }
+          else {
+            document.getElementById(elementId).type = "password";
+          }
+          if(event.srcElement.classList.contains("mdi-eye")) {
+            event.srcElement.classList.remove("mdi-eye");
+            event.srcElement.classList.add("mdi-eye-off");
+          }
+          else if(event.srcElement.classList.contains("mdi-eye-off")) {
+            event.srcElement.classList.remove("mdi-eye-off");
+            event.srcElement.classList.add("mdi-eye");
+          }
+        }
+        function isSignUpDisabled (text) {
+          let signUpBtn = document.getElementById("sign-up-btn");
+          if(text == "user-agreement") {
+            userAgreement = !userAgreement;
+          }
+          else if(text == "information-notice") {
+            informationNotice = !informationNotice;
+          }
+          if(!userAgreement || !informationNotice) {
+            signUpBtn.disabled = true;
+          }
+          else {
+            signUpBtn.disabled = false;
+          }
+        }
+        isSignUpDisabled();
+
+        function sendVerificationCode(){
+          divs.form.ms.text_email.value = divs.form.studio.text_email.value;
+          divs.form.ms.button_sendCode.click();
+        }
+        function verifyCode(){
+          const code = Array.from(divs.form.studio.text_emailVerificationCodes).map(node => node.value).join("");
+          divs.form.ms.text_emailVerificationCode.value = code;
+          divs.form.ms.button_verifyCode.click();
+        }
+        function finish(){
+          if (!isForgotPassword){
+            divs.form.ms.text_newPassword.value = divs.form.studio.password.value;
+            divs.form.ms.text_newPassword2.value = divs.form.studio.password2.value;
+          }
+          divs.form.ms.button_continue.click();
+        }
+        function backToLogin(){
+          divs.form.ms.button_cancel.click();
+        }
+
+
+
+        function processTemplates(type, search, replace){
+          const templateElems = divs.textTemplates;
+          Object.keys(templateElems).forEach(key => {
+            const elems = templateElems[key] instanceof Array ? templateElems[key] : templateElems[key] instanceof NodeList ? Array.from(templateElems[key]) : [templateElems[key]];
+            elems.forEach(curElem => {
+              if (type == "reset"){
+                curElem.innerHTML = curElem.studio_template;
+              }else if (type == "set"){
+                curElem.studio_template = curElem.innerHTML;
+              }else{
+                curElem.innerHTML = curElem.innerHTML.replace(search, replace);
+              }
+            });
+          });
+        }
+        function templates(){
+          const mail = divs.form.studio.text_email.value;
+          processTemplates("reset");
+          mail && processTemplates(undefined, /\${mail}/g, mail);
+          processTemplates(undefined, /\${section-text}/g, translate(isForgotPassword ? "Forgot Password" : "Create New Account"));
+          processTemplates(undefined, /\${section-info-text-email}/g, translate(isForgotPassword ? "Enter your e-mail to create new password." : "Enter your e-mail to create new account."));
+          processTemplates(undefined, /\${section-info-backtologin}/g, translate(isForgotPassword ? "Remember your password?" : "Already have an account?"));
+        }
+     </script>
+
+
+
+     <script language="javascript">
+        //observers
+        const divs = {
+          error: {
+            
+            email: get("studioauth_errorEmail"),
+            emailVerificationCode: get("studioauth_errorVerificationCode"),
+            pass: get("studioauth_errorPass"),
+            pass2: get("studioauth_errorPass2"),
+
+            emailVerificationError: get("studioauth_emailVerification_error"),
+            claimVerificationServerError: get("studioauth_claimVerification_error"),
+            claimVerificationServerErrorForgotFailed: get("studioauth_claimVerification_error_forgot_failed"),
+            emailVerificationControl_success_message: get("studioauth_emailVerificationControl_success_message"),
+          },
+          error_ms: {
+            emailVerificationError: get("emailVerificationControl_error_message"),
+            claimVerificationServerError: get("claimVerificationServerError"),
+            emailVerificationControl_success_message: get("emailVerificationControl_success_message"),
+          },
+          form: {
+            ms: {
+              text_email: get("email"),
+              text_emailVerificationCode: get("emailVerificationCode"),
+              text_newPassword: get("newPassword"),
+              text_newPassword2: get("reenterPassword"),
+              button_sendCode: get("emailVerificationControl_but_send_code"),
+              button_verifyCode: get("emailVerificationControl_but_verify_code"),
+              button_newCode: get("emailVerificationControl_but_send_new_code"),
+              button_changeMail: get("emailVerificationControl_but_change_claims"),
+              button_continue: get("continue"),
+              button_cancel: get("cancel"),
+            },
+            studio: {
+              text_email: get("studio_email"),
+              text_emailVerificationCodes: queryAll(".input-group > .sent-code"),
+              password: get("studioauth_loginPassword"),
+              password2: get("studioauth_loginPassword2"),
+              passwordFields: get("studio_password-fields"),
+              langSelection: get("studioauth_langSelection"),
+            }
+          },
+          textTemplates: {
+            confirmText: get("confirmText"),
+            templateSectionTexts: queryAll(".template-section-text"),            
+          }
+        };
+
+
+        function observeAttrs(element, attributeFilter, cb){
+          const observer = new MutationObserver((mutations) => {
+            cb(element);
+            translateDom();
+          });
+          observer.observe(element, {attributes: true, attributeFilter});
+        }
+        function observe(element, bind2Element, cb){
+          const observer = new MutationObserver((mutations) => {
+            if (bind2Element){
+              bind2Element.style.display = element.style.display == "none" ? "none" : "block";
+              bind2Element.textContent = element.textContent;
+            }
+            cb?.(element.style.display != "none" && element.textContent != "");
+            translateDom();
+          });
+          observer.observe(element, {attributes: true, attributeFilter: ["style"]});
+        }
+        observe(divs.form.ms.button_sendCode, undefined, (visible) => visible ? goStep(0) : undefined);
+        observe(divs.form.ms.button_verifyCode, undefined, (visible) => visible ? goStep(1) : undefined);
+        observe(divs.form.ms.button_changeMail, undefined, (visible) => visible ? goStep(2) : undefined);
+
+        function observeErrors(){
+          const errorObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutationRecord => {
+              const target = mutationRecord.target;
+              const itemLevel = target.classList.contains("itemLevel");
+              if (itemLevel){
+                let ourTarget;
+                target.nextElementSibling == divs.form.ms.text_email && (ourTarget = divs.error.email);
+                target.nextElementSibling == divs.form.ms.text_emailVerificationCode && (ourTarget = divs.error.emailVerificationCode);
+                target.nextElementSibling == divs.form.ms.text_newPassword && (ourTarget = divs.error.pass);
+                target.nextElementSibling == divs.form.ms.text_newPassword2 && (ourTarget = divs.error.pass2);
+                ourTarget.innerHTML = target.innerHTML;
+              }
+              console.log(mutationRecord);
+            });
+            translateDom();
+          });
+          queryAll(".error.itemLevel").forEach(item => errorObserver.observe(item, {childList: true, characterData: true, subtree: true}));
+
+          observe(divs.error_ms.emailVerificationError, divs.error.emailVerificationError);
+          observe(divs.error_ms.claimVerificationServerError, divs.error.claimVerificationServerError, (visible) => {
+            if (!visible || !isForgotPassword) { return; }
+            document.getElementById("password-step-forgot-failed").style.display = "block";
+            divs.error.claimVerificationServerErrorForgotFailed.innerHTML = divs.error_ms.claimVerificationServerError.innerHTML;
+          });
+          if (isForgotPassword){
+            observe(divs.error_ms.emailVerificationControl_success_message, divs.error.emailVerificationControl_success_message);
+          }
+        }
+        function observeDisableds(){
+          var m = new MutationObserver(mutations => {
+            mutations.forEach(mutation => mutation.target.removeAttribute(mutation.attributeName));
+          });
+          queryAll(".studioauth-translate-children select").forEach(item => m.observe(item, {attributes: true, attributeFilter: ["disabled", "aria-disabled"]}));
+        }
+
+        observeErrors();
+        observeDisableds()
+
+     </script>
+
+<script>
+  //translations
+  const nbsp = length => Array(length + 1).join(String.fromCharCode(160));
+
+  let translations = {
+    //html
+    "E-Mail": {tr: "E-Posta", en: undefined},
+    "EN": {tr: "EN"},
+    "TR": {tr: "TR"},
+    "NEXT": {tr: "DEVAM"},
+    "Already have an account?": {tr: "Zaten bir hesabınız var mı?"},
+    "Back to Login Page": {tr: "Giriş Sayfasına geri dön"},
+    "Confirm your email by entering the 6-digit code we sent to ${mail}": {tr: "${mail} E-Posta adresinize gönderilen 6 haneli kodu yazın."},
+    "PREVIOUS": {tr: "ÖNCEKİ"},
+    "Confirm your password": {tr: "Şifrenizi doğrulayın"},
+    "Password": {tr: "Şifre"},
+    "Password again": {tr: "Tekrar Şifre"},
+    "FINISH": {tr: "BİTİR"},
+    "SIGN UP": {tr: "ÜYE OL"},
+    "${section-text}": {tr: "${section-text}"},
+    "${section-info-text-email}": {tr: "${section-info-text-email}"},
+    "${section-info-backtologin}": {tr: "${section-info-backtologin}"},
+    "Create New Account": {tr: "Yeni hesap yaratma"},
+    "Enter your e-mail to create new account.": {tr: "Lütfen E-Posta adresinizi yazın."},
+
+
+    "Forgot Password": {tr: "Şifremi unuttum"},
+    "Enter your e-mail to create new password.": {tr: "Yeni bir şifre belirlemek için lütfen E-Posta adresinizi yazın."},
+    "Remember your password?": {tr: "Şifrenizi hatırladınız mı?"},
+   
+    //server
+    "email is required.": {tr: "Lütfen E-Posta adresinizi yazın."},
+    "Please enter a valid email address.": {tr: "Lütfen geçerli bir E-Posta adresi yazın."},
+    "text is required.": {tr: "Giriş yapmanız gerekmektedir."},
+    "That code is incorrect. Please try again.": {tr: "Hatalı bir kod girdiniz. Lütfen tekrar deneyin."},
+    "The verification has failed, please try again.": {tr: "Doğrulama hatalı. Lütfen tekrar deneyin."},
+    "password is required.": {tr: "Lütfen şifrenizi girin."},
+    "The password entry fields do not match. Please enter the same password in both fields and try again.": {tr: "Girdiğiniz şifreler birbirinden farklıdır. Lütfen girdiğiniz şifreyi kontrol edin."},
+    "The password must be between 8 and 64 characters.": {tr: "Şifre 8 ile 64 karakter uzunluğunda olmalıdır."},
+    "The password must have at least 3 of the following:": {tr: "Şifrenizde aşağıdakilerden en az 3 tanesi olmalıdır."},
+    "Your password must have at least 3 of the following:": {tr: "Şifrenizde aşağıdakilerden en az 3 tanesi olmalıdır."},
+    "- a lowercase letter": {tr: nbsp(2) + "- küçük bir harf"},
+    "- an uppercase letter": {tr: nbsp(2) + "- büyük bir harf"},
+    "- a digit": {tr: nbsp(2) + "- bir rakam"},
+    "- a number": {tr: nbsp(2) + "- bir rakam"},
+    "- a symbol": {tr: nbsp(2) + "- bir sembol"},
+    "A user with the specified credential could not be found.": {tr: "Verdiğiniz bilgiler ile bir kullanıcı bulunamadı."},
+    "A user with the specified ID already exists. Please choose a different one.": {tr: "Belirttiğiniz kullanıcı zaten mevcut. Lütfen farklı bir kullanıcı ile deneyin."}
+  };
+  </script>
+
+
+<script>
+  // TÜM TEMPLATELER İÇİN AYNI BLOK
+  //language
+  Object.keys(translations).forEach(key => {
+    const curItem = translations[key];
+    curItem["en"] = curItem["en"] || key;
+    if (!curItem.maps){return;}
+    curItem.maps.forEach(map => translations[map] = curItem);
+  });
+  let langCode = window.SETTINGS.locale.lang;
+  const translate = (textOrKey) => {
+    const record = translations[textOrKey];
+    if (!record) { console.log(`missing translation: ${textOrKey}`); return textOrKey; }
+    const translation = record[langCode];
+    return translation ? translation : textOrKey;
+  }
+  function translateRecursively(element, result = []) {
+    if (element.nodeType === Node.TEXT_NODE && element.textContent.trim()) {
+      const parent = element.parentElement;
+      // if (parent.id == "studioauth_errorEmail"){debugger;}
+      let text = element.textContent.trim();
+      const textOrKey = translations[text] ? (parent.translateKey = text) : (parent.translateKey || (parent.translateKey = text));
+      element.textContent = translate(textOrKey);
+    } else if (element.placeholder) {
+      const textOrKey = element.placeholderKey || (element.placeholderKey = element.placeholder);
+      element.placeholder = translate(textOrKey);
+    } else {
+      if (element.tagName == "svg"){return;}
+      element.childNodes.forEach((child) => {
+        translateRecursively(child, result);
+      });
+    }
+    return result;
+  }
+  function translateDom(){
+    queryAll(".studioauth-translate-children").forEach(element => translateRecursively(element));
+  }
+  function langChange(newLangCode){
+    if (langCode == newLangCode){return;}
+
+    // const currentUrl = new URL(window.location.href);
+    // currentUrl.searchParams.set('ui_locales', newLangCode);
+    // if (window.setServerLang){
+    //   window.location.href = currentUrl.toString();
+    // } else {
+    //   window.history.replaceState(null, '', currentUrl.toString());
+    // }
+
+    langCode = newLangCode;
+    localStorage.setItem('langCode', langCode);
+    translateDom();
+    let tr = document.getElementById("tr");
+    let en = document.getElementById("en");
+    let politikalar = document.getElementById("gizlilik-politikaları");
+    let policies = document.getElementById("privacy-policies");
+    if(newLangCode == "tr") {
+        tr.style.display = "none"; 
+        en.style.display = "flex"
+        politikalar.style.display = "block"; 
+        policies.style.display = "none"
+    }
+    else if(newLangCode == "en") {
+        en.style.display = "none";
+        tr.style.display = "flex"
+        policies.style.display = "block";
+        politikalar.style.display = "none"
+    }
+  }
+  var image1 = document.getElementById('svg1');
+      var image2 = document.getElementById('svg2');
+      var currentImage = 1;
+      image1.style.display = 'flex';
+      image2.style.display = 'none';
+
+      setInterval(function () {
+       if (currentImage === 1) {
+         image1.style.display = 'none';
+         image2.style.display = 'flex';
+
+        currentImage = 2;
+       } else {
+         image1.style.display = 'flex';
+         image2.style.display = 'none';
+         currentImage = 1;
+      }
+     }, 3000);
+  const localStorageLangCode = localStorage.getItem("langCode");
+  if (localStorageLangCode && localStorageLangCode != langCode){
+    langChange(localStorageLangCode);
+  }
+</script>
+
+
+    <script>
+      //startup
+      divs.form.studio.langSelection.value = langCode;
+      // baseObject.envName != "prod" && (divs.form.studio.langSelection.parentElement.style.display = "block");
+      translateDom();
+      processTemplates("set");
+      translateDom = ((orig) => () => {orig();templates();})(translateDom);
+    </script>
+</body>
+</html>
